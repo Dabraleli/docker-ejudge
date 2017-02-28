@@ -15,6 +15,8 @@ ENV APACHE_LOG_DIR      /var/log/apache2
 ENV URL_FREEBASIC       http://downloads.sourceforge.net/fbc/FreeBASIC-1.05.0-linux-x86_64.tar.gz?download
 ENV URL_EJUDGE          http://www.ejudge.ru/download/ejudge-3.6.0.tgz
 
+ENV TZ=Asia/Yekaterinburg
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN cd /home &&\
     locale-gen en_US.UTF-8 ru_RU.UTF-8 &&\
     apt-get update &&\
@@ -64,5 +66,4 @@ ADD scripts /opt/scripts
 EXPOSE 80
 
 VOLUME /home/ejudge
-
 CMD ["/bin/bash", "/opt/scripts/run.sh"]
