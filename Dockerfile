@@ -26,7 +26,7 @@ RUN cd /home &&\
                        g++ gawk apache2 gettext fpc mc openjdk-8-jdk-headless \
                        libcurl4-openssl-dev libzip-dev uuid-dev bison flex \
                        mono-devel mono-runtime mono-vbnc php7.0-cli perl \
-                       ruby python python3 gccgo &&\
+                       ruby python python3 gccgo git &&\
     \
     wget -O freebasic.tar.gz "${URL_FREEBASIC}" &&\
     mkdir /opt/freebasic &&\
