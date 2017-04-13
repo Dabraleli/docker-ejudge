@@ -42,9 +42,8 @@ RUN cd /home &&\
                      /var/www/ejudge/htdocs \
                      /opt/ejudge-build &&\
     \
-    wget -O ejudge.tar.gz --no-check-certificate "${URL_EJUDGE}" &&\
-    tar -xvf ejudge.tar.gz -C /opt/ &&\
-    rm ejudge.tar.gz &&\
+    cd /opt &&\
+    git clone https://github.com/Dabraleli/ejudge.git &&\
     cd /opt/ejudge &&\
     ./configure --prefix=/opt/ejudge-build \
                 --enable-contests-home-dir=/home/ejudge \
