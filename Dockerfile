@@ -33,7 +33,6 @@ RUN cd /home &&\
     groupadd ejudge &&\
     useradd ejudge -r -s /bin/bash -g ejudge &&\
     mkdir -m 0777 -p /var/www/ejudge/cgi-bin \
-                     /var/www/ejudge/htdocs \
                      /opt/ejudge-build &&\
     \
     cd /opt &&\
@@ -42,7 +41,7 @@ RUN cd /home &&\
     ./configure --prefix=/opt/ejudge-build \
                 --enable-contests-home-dir=/home/ejudge \
                 --with-httpd-cgi-bin-dir=/var/www/ejudge/cgi-bin \
-                --with-httpd-htdocs-dir=/var/www/ejudge/htdocs \
+                --with-httpd-htdocs-dir=/var/www/ejudge/cgi-bin \
                 --enable-ajax \
                 --enable-charset=utf-8 &&\
     make &&\
