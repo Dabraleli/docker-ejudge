@@ -1,0 +1,25 @@
+<!--<form method="post" enctype="application/x-www-form-urlencoded" action="http://37.75.251.35:20128/new-client">-->
+<script type="text/javascript" src="js/login.js"></script>
+<input type="hidden" name="SID" value="0000000000000000"/>
+<form class="form-signin">
+<input type="hidden" name="role" value="0" />
+<input type="hidden" name="prob_name" />
+
+        <label for="inputUsername" class="sr-only">Username</label>
+        <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+        <br>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required><br>
+        <select>
+  <option>Участник</option>
+  <option>Судья</option>
+  <option>Администратор</option>
+</select>
+<br>
+<select>
+    <option>Основной тур Чемпионата</option>
+</select>
+<br>
+<input type="button" id="btn-login" class="btn btn-lg btn-primary btn-block" value="Sign in"/>
+</form>
+<!--<input type="hidden" name="contest_id" value="1" />-->
