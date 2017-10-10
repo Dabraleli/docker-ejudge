@@ -5,7 +5,7 @@ $(document).ready(function(){
 		if( username != '' && password != ''){
 			$.post("http://" + document.location.host + "/new-client",{ login: username, password: password}, function(data) {
 				saveFile(data);
-				document.location = document.location.href + "/new-client?contest_id=1&SID=" + getCookie("EJSID");
+				document.location = document.location.href + "/new-client?SID=" + getCookie("EJSID") + "&contest_id=1";
 			});
 		}
 	});
