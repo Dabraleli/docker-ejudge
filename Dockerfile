@@ -51,12 +51,13 @@ RUN cd /home &&\
     \
     a2enmod cgi &&\
     rm /etc/apache2/sites-enabled/* &&\
-    cp html/index.html /var/www/ejudge/cgi-bin/ &&\
-    mkdir /var/www/ejudge/cgi-bin/js/ &&\
-    cp html/js/auth.js /var/www/ejudge/cgi-bin/js
 
 ADD apache/ejudge.conf /etc/apache2/sites-enabled/ejudge.conf
 ADD scripts /opt/scripts
+ADD html /opt/html
+RUN cp html/index.html /var/www/ejudge/cgi-bin/ &&\
+    mkdir /var/www/ejudge/cgi-bin/js/ &&\
+    cp html/js/auth.js /var/www/ejudge/cgi-bin/js
 
 EXPOSE 80
 
