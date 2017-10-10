@@ -19,8 +19,19 @@ function getCookie(name) {
 }
 
 function saveFile(data) {
-  var text = data;
-  var filename = "File";
-  var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
-  saveAs(blob, filename+".txt");
+    var file = new Blob([data], {type: "txt"});
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+        window.navigator.msSaveOrOpenBlob(file, "file");
+    else { // Others
+        var a = document.createElement("a"),
+                url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = "file";
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function() {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);  
+        }, 0); 
+    }
 }
