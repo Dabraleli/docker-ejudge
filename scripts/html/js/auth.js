@@ -3,7 +3,7 @@ $(document).ready(function(){
 		var username = $("#inputUsername").val();
 		var password = $("#inputPassword").val();
 		if( username != '' && password != ''){
-			$.post("http://" + document.location.host + "/new-client",{ login: username, password: password}, function(data) {
+			$.get("http://" + document.location.host + "/new-client",{ login: username, password: password}, function(data) {
 				saveFile(data);
 				document.location = document.location.href + "/new-client?SID=" + getCookie("EJSID") + "&contest_id=1";
 			});
