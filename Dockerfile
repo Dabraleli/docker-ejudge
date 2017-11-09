@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 
-MAINTAINER Alexey Nurgaliev <atnurgaliev@gmail.com>
+MAINTAINER Denis Arkhipenko <dabraleliid@gmail.com>
 
 ENV LANG=C.UTF-8
 ENV DEBIAN_FRONTEND     noninteractive
@@ -16,26 +16,28 @@ ENV URL_FREEBASIC       http://downloads.sourceforge.net/fbc/FreeBASIC-1.05.0-li
 ENV URL_EJUDGE          http://www.ejudge.ru/download/ejudge-3.6.0.tgz
 
 ENV TZ=Asia/Yekaterinburg
+
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN cd /home &&\
-    locale-gen en_US.UTF-8 ru_RU.UTF-8 &&\
-    apt-get update &&\
+
+RUN apt-get clean && apt-get update && apt-get install -y locales 
+
+RUN locale-gen en_US.UTF-8 ru_RU.UTF-8 &&\
+    update-locale LANG=ru_RU.UTF-8
+
+RUN apt-get update &&\
     apt-get install -y wget ncurses-base libncurses-dev libncursesw5 \
                        libncursesw5-dev expat libexpat1 libexpat1-dev \
                        zlib1g-dev libelf-dev \
                        g++ gawk apache2 gettext fpc mc openjdk-8-jdk-headless \
                        libcurl4-openssl-dev libzip-dev uuid-dev bison flex \
                        mono-devel mono-runtime mono-vbnc mono-mcs php7.0-cli perl \
-                       ruby python python3 gccgo git &&\
-    \
-    cd /home &&\
-    \
-    groupadd ejudge &&\
+                       ruby python python3 gccgo git
+RUN groupadd ejudge &&\
     useradd ejudge -r -s /bin/bash -g ejudge &&\
     mkdir -m 0777 -p /var/www/ejudge/cgi-bin \
-                     /opt/ejudge-build &&\
-    \
-    cd /opt &&\
+                     /opt/ejudge-build
+
+RUN cd /opt &&\
     git clone https://github.com/Dabraleli/ejudge.git &&\
     cd /opt/ejudge &&\
     ./configure --prefix=/opt/ejudge-build \
@@ -54,8 +56,11 @@ RUN cd /home &&\
 
 ADD apache/ejudge.conf /etc/apache2/sites-enabled/ejudge.conf
 ADD scripts /opt/scripts
+ADD images /opt/images
 
 EXPOSE 80
 
 VOLUME /home/ejudge
+CMD ["/bin/cp", "/opt/images/logo3.png /var/www/ejudge/cgi-bin/ejudge/logo3.png"]
+CMD ["/bin/cp", "/opt/images/logo.gif /var/www/ejudge/cgi-bin/ejudge/logo.gif"]
 CMD ["/bin/bash", "/opt/scripts/run.sh"]
