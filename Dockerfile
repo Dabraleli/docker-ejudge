@@ -15,11 +15,18 @@ ENV APACHE_LOG_DIR      /var/log/apache2
 ENV URL_FREEBASIC       http://downloads.sourceforge.net/fbc/FreeBASIC-1.05.0-linux-x86_64.tar.gz?download
 ENV URL_EJUDGE          http://www.ejudge.ru/download/ejudge-3.6.0.tgz
 
-ENV TZ=Asia/Yekaterinburg
-
+ENV TZ Asia/Yekaterinburg
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get clean && apt-get update && apt-get install -y locales 
+
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y ntp tzdata
+
+RUN ntpd -gq && service ntp start
+
+RUN dpkg-reconfigure -f noninteractive tzdata
 
 RUN locale-gen en_US.UTF-8 ru_RU.UTF-8 &&\
     update-locale LANG=ru_RU.UTF-8
@@ -29,9 +36,9 @@ RUN apt-get update &&\
                        libncursesw5-dev expat libexpat1 libexpat1-dev \
                        zlib1g-dev libelf-dev \
                        g++ gawk apache2 gettext fpc mc openjdk-8-jdk-headless \
-                       libcurl4-openssl-dev libzip-dev uuid-dev bison flex \
-                       mono-devel mono-runtime mono-vbnc mono-mcs php7.0-cli perl \
-                       ruby python python3 gccgo git
+                       libcurl4-openssl-dev libzip-dev uuid-dev bison flex sendmail \
+                       mono-devel mono-runtime mono-vbnc mono-mcs \
+                       ruby python python3 git
 RUN groupadd ejudge &&\
     useradd ejudge -r -s /bin/bash -g ejudge &&\
     mkdir -m 0777 -p /var/www/ejudge/cgi-bin \
@@ -61,6 +68,8 @@ ADD images /opt/images
 EXPOSE 80
 
 VOLUME /home/ejudge
-CMD ["/bin/cp", "/opt/images/logo3.png /var/www/ejudge/cgi-bin/ejudge/logo3.png"]
-CMD ["/bin/cp", "/opt/images/logo.gif /var/www/ejudge/cgi-bin/ejudge/logo.gif"]
 CMD ["/bin/bash", "/opt/scripts/run.sh"]
+RUN ln -s /home/ejudge/000001/var/status/dir/standings.html /var/www/ejudge/cgi-bin/standings.html
+ADD apache/standings.js /var/www/ejudge/cgi-bin/ejudge/standings.js
+ADD apache/standings.css /var/www/ejudge/cgi-bin/ejudge/standings.css
+
