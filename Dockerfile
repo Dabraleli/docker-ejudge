@@ -45,7 +45,7 @@ RUN groupadd ejudge &&\
                      /opt/ejudge-build
 
 RUN cd /opt &&\
-    git clone https://github.com/Dabraleli/ejudge.git &&\
+    git clone https://github.com/blackav/ejudge.git &&\
     cd /opt/ejudge &&\
     ./configure --prefix=/opt/ejudge-build \
                 --enable-contests-home-dir=/home/ejudge \
