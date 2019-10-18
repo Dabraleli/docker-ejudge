@@ -17,7 +17,7 @@ Running
 
     $ docker run -d --name ejudge -p 80:80 -v /opt/ejudge:/home/ejudge -v /opt/problemset:/var/www/ejudge/cgi-bin/problemset ejudge
 
-## Stanings
+## Standings
 
     $  sudo docker exec ejudge  ln -s /home/ejudge/%contest_id%/var/status/dir/standings.html /var/www/ejudge/cgi-bin/standings.html
 
