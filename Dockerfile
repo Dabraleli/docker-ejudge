@@ -69,7 +69,6 @@ EXPOSE 80
 
 VOLUME /home/ejudge
 CMD ["/bin/bash", "/opt/scripts/run.sh"]
-RUN ln -s /home/ejudge/000001/var/status/dir/standings.html /var/www/ejudge/cgi-bin/standings.html
 ADD apache/standings.js /var/www/ejudge/cgi-bin/ejudge/standings.js
 ADD apache/standings.css /var/www/ejudge/cgi-bin/ejudge/standings.css
 
