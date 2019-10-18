@@ -15,7 +15,7 @@ Building
 Running
 =======
 
-    $ docker run -d --name ejudge -p 80:80 -v opt/ejudge:/home/ejudge -v /opt/problemset:/var/www/ejudge/cgi-bin/problemset ejudge
+    $ docker run -d --name ejudge -p 80:80 -v /opt/ejudge:/home/ejudge -v /opt/problemset:/var/www/ejudge/cgi-bin/problemset ejudge
 
 License
 =======
